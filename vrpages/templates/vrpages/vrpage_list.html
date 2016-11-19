@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}VR Page List{% endblock %}
+
+{% block content %}
+    {% for vrpage in vrpages %}
+    <h2>{{ vrpage.name }}</h2>
+    <p>{{ vrpage.url }}</p>
+    {% endfor %}
+{% endblock %}
