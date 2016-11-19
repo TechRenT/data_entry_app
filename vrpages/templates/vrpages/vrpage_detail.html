@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ vrpage.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ vrpage.name }}</h2>
+    <ul>
+    {% for url in vrpage.rawurl_set.all %}
+        <li>{{ url }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

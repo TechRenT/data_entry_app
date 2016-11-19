@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}Raw URL Detail{% endblock %}
+
+{% block content %}
+    <p>{{ raw_url.url }}</p>
+    <p>{{ raw_url.source }}</p>
+    <p>{{ raw_url.batch }}</p>
+    <p>Checked: {{ raw_url.checked }}</p>
+    <p>Qualified: {{ raw_url.qualified }}</p>
+{% endblock %}

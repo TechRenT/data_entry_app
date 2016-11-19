@@ -1,5 +1,15 @@
 from django.contrib import admin
 
-from .models import VRPage
+from . import models
 
-admin.site.register(VRPage)
+
+class RawUrlInline(admin.StackedInline):
+    model = models.RawUrl
+
+
+class VRPageAdmin(admin.ModelAdmin):
+    inlines = [RawUrlInline,]
+
+admin.site.register(models.VRPage, VRPageAdmin)
+admin.site.register(models.RawUrl)
+
