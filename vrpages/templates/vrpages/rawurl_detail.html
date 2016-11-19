@@ -3,6 +3,7 @@
 {% block title %}Raw URL Detail{% endblock %}
 
 {% block content %}
+    <h3><a href="{% url 'vrpages:detail' pk=raw_url.vrpage_id %}">{{ raw_url.vrpage.name }}</a></h3>
     <p>{{ raw_url.url }}</p>
     <p>{{ raw_url.source }}</p>
     <p>{{ raw_url.batch }}</p>

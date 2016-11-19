@@ -5,8 +5,8 @@
 {% block content %}
     <h2>{{ vrpage.name }}</h2>
     <ul>
-    {% for url in vrpage.rawurl_set.all %}
-        <li>{{ url }}</li>
-    {% endfor %}
+        {% for url in vrpage.rawurl_set.all %}
+            <li><a href="{% url 'vrpages:rawurl' vrpage_pk=url.vrpage_id rawurl_pk=url.pk %}">{{ url }}</a></li>
+        {% endfor %}
     </ul>
 {% endblock %}

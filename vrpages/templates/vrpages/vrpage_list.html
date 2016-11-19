@@ -4,7 +4,7 @@
 
 {% block content %}
     {% for vrpage in vrpages %}
-    <h2>{{ vrpage.name }}</h2>
+    <h2><a href="{% url 'vrpages:detail' pk=vrpage.pk %}">{{ vrpage.name }}</a></h2>
     <p>{{ vrpage.url }}</p>
     {% endfor %}
 {% endblock %}
