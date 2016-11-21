@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import UpdateView
 
 from . import models
 
@@ -16,3 +17,8 @@ def vrpage_detail(request, pk):
 def rawurl_detail(request, vrpage_pk, rawurl_pk):
     raw_url = get_object_or_404(models.RawUrl, vrpage_id=vrpage_pk, id=rawurl_pk)
     return render(request, 'vrpages/rawurl_detail.html', {'raw_url': raw_url})
+
+
+class RawUrlUpdateView(UpdateView):
+    model = models.RawUrl
+    fields = ('url', 'checked', 'qualified')

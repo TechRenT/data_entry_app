@@ -13,6 +13,7 @@ class VRPage(models.Model):
 
 class RawUrl(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
+    domain = models.CharField(max_length=30, default='')
     url = models.URLField(max_length=200)
     source = models.CharField(max_length=30)
     batch = models.CharField(max_length=30)
