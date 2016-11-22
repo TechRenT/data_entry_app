@@ -34,3 +34,18 @@ def rawurl_qualify(request, pk):
                 form.save()
             return HttpResponseRedirect(reverse('vrpages:rawurl_qualify', args=[pk]))
         return render(request, 'vrpages/rawurl_qualify.html', {'form': form})
+
+
+def rawurl_polish(request, pk):
+    try:
+        rawurl = models.RawUrl.objects.filter(vrpage_id=pk).filter(qualified=True)[0]
+    except IndexError:
+        return HttpResponseRedirect(reverse('vrpages:list'))
+    else:
+        form = forms.PolishUrlForm()
+        if request.method == 'POST':
+            form = forms.PolishUrlForm(request.POST)
+            if form.is_valid():
+                form.save()
+            return HttpResponseRedirect(reverse('homepage'))
+        return render(request, 'vrpages/rawurl_polish.html', {'form': form})

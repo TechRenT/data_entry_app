@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'(?P<vrpage_pk>\d+)/(?P<rawurl_pk>\d+)/$', views.rawurl_detail,
         name='rawurl'),
     url(r'(?P<pk>\d+)/qualify/$', views.rawurl_qualify, name='rawurl_qualify'),
+    url(r'(?P<pk>\d+)/polish/$', views.rawurl_polish, name='rawurl_polish'),
 ]

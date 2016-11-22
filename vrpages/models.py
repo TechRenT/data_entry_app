@@ -28,7 +28,8 @@ class RawUrl(models.Model):
 
 class PolishUrl(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    url = models.OneToOneField(RawUrl)
+    rawurl = models.OneToOneField(RawUrl)
+    polished_url = models.URLField(max_length=200)
     email = models.EmailField()
     page_title = models.CharField(max_length=100)
     contact_name = models.CharField(max_length=30)

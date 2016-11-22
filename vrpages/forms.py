@@ -10,3 +10,15 @@ class RawUrlForm(forms.ModelForm):
             'checked',
             'qualified'
         ]
+
+
+class PolishUrlForm(forms.ModelForm):
+    class Meta:
+        model = models.PolishUrl
+        fields = [
+            'polished_url',
+            'email',
+            'page_title',
+            'contact_name',
+            'broken_link'
+        ]
