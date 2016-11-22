@@ -24,3 +24,15 @@ class RawUrl(models.Model):
 
     def __str__(self):
         return self.url
+
+
+class PolishUrl(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    url = models.OneToOneField(RawUrl)
+    email = models.EmailField()
+    page_title = models.CharField(max_length=100)
+    contact_name = models.CharField(max_length=30)
+    broken_link = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.url
