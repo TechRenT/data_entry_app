@@ -5,7 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from . import models
 
 
-class RawUrlInline(admin.StackedInline):
+class RawUrlInline(admin.TabularInline):
     model = models.RawUrl
 
 

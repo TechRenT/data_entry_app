@@ -1,6 +1,8 @@
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import UpdateView
 
+from . import forms
 from . import models
 
 
@@ -19,6 +21,16 @@ def rawurl_detail(request, vrpage_pk, rawurl_pk):
     return render(request, 'vrpages/rawurl_detail.html', {'raw_url': raw_url})
 
 
-class RawUrlUpdateView(UpdateView):
-    model = models.RawUrl
-    fields = ('url', 'checked', 'qualified')
+def rawurl_qualify(request, pk):
+    try:
+        rawurl = models.RawUrl.objects.filter(vrpage_id=pk).filter(checked=False)[0]
+    except IndexError:
+        return HttpResponseRedirect(reverse('vrpages:list'))
+    else:
+        form = forms.RawUrlForm(instance=rawurl)
+        if request.method == 'POST':
+            form = forms.RawUrlForm(instance=rawurl, data=request.POST)
+            if form.is_valid():
+                form.save()
+            return HttpResponseRedirect(reverse('vrpages:rawurl_qualify', args=[pk]))
+        return render(request, 'vrpages/rawurl_qualify.html', {'form': form})

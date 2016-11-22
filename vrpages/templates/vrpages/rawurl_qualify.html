@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Qualify Task{% endblock %}
+
+{% block content %}
+    <div class="container text-xs-center">
+        <h2>Qualify Task</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit" class="btn btn-success btn-lg">
+        </form>
+    </div>
+{% endblock %}
