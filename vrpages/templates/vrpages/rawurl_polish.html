@@ -5,7 +5,9 @@
 {% block content %}
     <div class="container text-xs-center">
         <h2>Polish Task</h2>
+
         <form action="" method="POST">
+            <p>{{ rawurl.url|urlize }}</p>
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Submit" class="btn btn-success btn-lg">

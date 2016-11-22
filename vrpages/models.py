@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -36,4 +35,4 @@ class PolishUrl(models.Model):
     broken_link = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.url
+        return self.polished_url

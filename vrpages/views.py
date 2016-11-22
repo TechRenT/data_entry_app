@@ -42,10 +42,10 @@ def rawurl_polish(request, pk):
     except IndexError:
         return HttpResponseRedirect(reverse('vrpages:list'))
     else:
-        form = forms.PolishUrlForm()
+        form = forms.PolishUrlForm(initial={'polished_url': rawurl.url})
         if request.method == 'POST':
             form = forms.PolishUrlForm(request.POST)
             if form.is_valid():
                 form.save()
             return HttpResponseRedirect(reverse('homepage'))
-        return render(request, 'vrpages/rawurl_polish.html', {'form': form})
+        return render(request, 'vrpages/rawurl_polish.html', {'form': form, 'rawurl': rawurl})
