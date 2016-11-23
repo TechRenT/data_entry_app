@@ -16,9 +16,11 @@ class PolishUrlForm(forms.ModelForm):
     class Meta:
         model = models.PolishUrl
         fields = [
+            'rawurl',
             'polished_url',
             'email',
             'page_title',
             'contact_name',
             'broken_link'
         ]
+        widgets = {'rawurl': forms.HiddenInput()}

@@ -38,11 +38,14 @@ def rawurl_qualify(request, pk):
 
 def rawurl_polish(request, pk):
     try:
-        rawurl = models.RawUrl.objects.filter(vrpage_id=pk).filter(qualified=True)[0]
+        rawurl = models.RawUrl.objects.filter(
+            vrpage_id=pk).filter(
+            qualified=True).filter(
+            polishurl__email__isnull=True)[0]
     except IndexError:
         return HttpResponseRedirect(reverse('vrpages:list'))
     else:
-        form = forms.PolishUrlForm(initial={'polished_url': rawurl.url})
+        form = forms.PolishUrlForm(initial={'polished_url': rawurl.url, 'rawurl': rawurl.pk})
         if request.method == 'POST':
             form = forms.PolishUrlForm(request.POST)
             if form.is_valid():
