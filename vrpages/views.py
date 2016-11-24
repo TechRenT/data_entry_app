@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 
 from . import forms
@@ -20,15 +20,15 @@ def rawurl_qualify(request, pk):
     try:
         rawurl = models.RawUrl.objects.filter(vrpage_id=pk).filter(checked=False)[0]
     except IndexError:
-        return HttpResponseRedirect(reverse('vrpages:qualify_list'))
+        return HttpResponseRedirect(reverse('vrpages:no_task', args=[pk]))
     else:
         form = forms.RawUrlForm(instance=rawurl)
         if request.method == 'POST':
             form = forms.RawUrlForm(instance=rawurl, data=request.POST)
             if form.is_valid():
                 form.save()
-            return HttpResponseRedirect(reverse('vrpages:rawurl_qualify', args=[pk]))
-        return render(request, 'vrpages/rawurl_qualify.html', {'form': form})
+                return HttpResponseRedirect(reverse('vrpages:rawurl_qualify', args=[pk]))
+        return render(request, 'vrpages/rawurl_qualify.html', {'form': form, 'rawurl': rawurl})
 
 
 def rawurl_polish(request, pk):
@@ -38,12 +38,19 @@ def rawurl_polish(request, pk):
             qualified=True).filter(
             polishurl__email__isnull=True)[0]
     except IndexError:
-        return HttpResponseRedirect(reverse('vrpages:polish_list'))
+        return HttpResponseRedirect(reverse('vrpages:no_task', args=[pk]))
     else:
-        form = forms.PolishUrlForm(initial={'polished_url': rawurl.url, 'rawurl': rawurl.pk})
+        form = forms.PolishUrlForm(initial={'polished_url': rawurl.url})
         if request.method == 'POST':
             form = forms.PolishUrlForm(request.POST)
             if form.is_valid():
-                form.save()
-            return HttpResponseRedirect(reverse('homepage'))
+                polishurl = form.save(commit=False)
+                polishurl.rawurl = rawurl
+                polishurl.save()
+                return HttpResponseRedirect(reverse('vrpages:rawurl_polish', args=[pk]))
         return render(request, 'vrpages/rawurl_polish.html', {'form': form, 'rawurl': rawurl})
+
+
+def no_task(request, pk):
+    vrpage = get_object_or_404(models.VRPage, pk=pk)
+    return render(request, 'vrpages/no_task.html', {'vrpage': vrpage})

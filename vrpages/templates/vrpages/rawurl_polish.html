@@ -1,16 +1,32 @@
 {% extends "layout.html" %}
+{% load widget_tweaks %}
 
 {% block title %}Polish Task{% endblock %}
 
 {% block content %}
-    <div class="container text-xs-center">
+    <div class="container">
         <h2>Polish Task</h2>
+        <hr>
 
         <form action="" method="POST">
             <p>{{ rawurl.url|urlize }}</p>
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit" class="btn btn-success btn-lg">
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|add_class:'form-control' }}
+                    {% for error in field.errors %}
+                    <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+            </div>
         </form>
     </div>
 {% endblock %}

@@ -3,10 +3,12 @@
 {% block title %}VR Page Polish{% endblock %}
 
 {% block content %}
-    <h2>Polish</h2>
-    <hr>
-    {% for vrpage in vrpages %}
-    <h4><a href="{% url 'vrpages:rawurl_polish' pk=vrpage.pk%}">{{ vrpage.name }}</a></h4>
-    <p>{{ vrpage.url }}</p>
-    {% endfor %}
+    <div class="container">
+        <h2>Polish</h2>
+        <hr>
+        {% for vrpage in vrpages %}
+        <h4><a href="{% url 'vrpages:rawurl_polish' pk=vrpage.pk%}">{{ vrpage.name }}</a></h4>
+        <p>{{ vrpage.url }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

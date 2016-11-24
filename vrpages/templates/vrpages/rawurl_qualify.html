@@ -1,14 +1,42 @@
 {% extends "layout.html" %}
+{% load widget_tweaks %}
 
 {% block title %}Qualify Task{% endblock %}
 
 {% block content %}
-    <div class="container text-xs-center">
+    <div class="container">
         <h2>Qualify Task</h2>
+        <hr>
         <form action="" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit" class="btn btn-success btn-lg">
+            <div class="form-group">
+                <label for="{{ form.url.id_for_label }}">
+                    <strong>{{ form.url.label }}:</strong> {{ rawurl.url|urlize }}
+                </label>
+                <div>
+                    {% render_field form.url class="form-control" %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    {% render_field form.checked class="custom-control-input" %}
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description"><strong>Checked</strong></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    {% render_field form.qualified class="custom-control-input" %}
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description"><strong>Qualified</strong></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+            </div>
         </form>
     </div>
 {% endblock %}
