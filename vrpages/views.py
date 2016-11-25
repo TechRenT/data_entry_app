@@ -17,6 +17,11 @@ def vrpage_polish_list(request):
     return render(request, 'vrpages/vrpage_polish_list.html', {'vrpages': vrpages})
 
 
+def qualify_polish_list(request):
+    vrpages = models.VRPage.objects.all()
+    return render(request, 'vrpages/qualify_polish_list.html', {'vrpages': vrpages})
+
+
 def rawurl_qualify(request, pk):
     try:
         rawurl = models.RawUrl.objects.filter(vrpage_id=pk).filter(checked=False)[0]
@@ -77,8 +82,12 @@ def qualify_polish(request, pk):
                         polishurl = polishform.save(commit=False)
                         polishurl.rawurl = rawurl
                         polishurl.save()
-                        return HttpResponseRedirect(reverse('vrpages:qualify_polish', args=[pk]))
+                        return HttpResponseRedirect(reverse
+                                ('vrpages:qualify_polish', args=[pk]))
                 else:
                     form.save()
-                    return HttpResponseRedirect(reverse('vrpages:qualify_polish', args=[pk]))
-        return render(request, 'vrpages/qualify_polish.html', {'form': form, 'polishform': polishform})
+                    return HttpResponseRedirect(reverse
+                                ('vrpages:qualify_polish', args=[pk]))
+        return render(request, 'vrpages/qualify_polish.html', {'form': form,
+                                                    'polishform': polishform,
+                                                    'rawurl': rawurl})

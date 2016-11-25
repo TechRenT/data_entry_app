@@ -10,20 +10,19 @@ class RawUrlForm(forms.ModelForm):
             'checked',
             'qualified'
         ]
+        widgets = {'url': forms.HiddenInput()}
 
 
 class PolishUrlForm(forms.ModelForm):
     class Meta:
         model = models.PolishUrl
         fields = [
-            #  'rawurl',
             'polished_url',
             'email',
             'page_title',
             'contact_name',
             'broken_link'
         ]
-        #  widgets = {'rawurl': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
         super(PolishUrlForm, self).__init__(*args, **kwargs)
