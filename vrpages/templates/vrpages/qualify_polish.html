@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Polish Task{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Polish Task</h2>
+        <hr>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|add_class:'form-control' }}
+                    {% for error in field.errors %}
+                    <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <hr>
+            <h3>Fill out the below if the raw URL is qualified</h3>
+
+            {{ polishform.non_field_errors }}
+            {% for hidden in polishform.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in polishform.visible_fields %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|add_class:'form-control' }}
+                    {% for error in field.errors %}
+                    <span class="help-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
