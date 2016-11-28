@@ -8,7 +8,8 @@ class RawUrlForm(forms.ModelForm):
         fields = [
             'url',
             'checked',
-            'qualified'
+            'qualified',
+            'polisher'
         ]
 
     def clean(self):
