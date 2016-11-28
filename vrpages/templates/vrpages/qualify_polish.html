@@ -6,12 +6,21 @@
 {% block content %}
     <div class="container">
         <h3>Qualify and Polish</h3>
+        {{ form.non_field_errors }}
         {{ polishform.non_field_errors }}
         <hr>
 
         <form action="" method="POST">
             {% csrf_token %}
-            <p>Raw URL: <a href="{{ rawurl.url }}" target="_blank">{{ rawurl.url }}</a></p>
+            <div class="form-group">
+                <label for="{{ form.url.id_for_label }}">
+                    <strong>{{ form.url.label }}:</strong>
+                    <a href="{{ rawurl.url }}" target="_blank">{{ rawurl.url }}</a>
+                </label>
+                <div>
+                    {% render_field form.url class="form-control" %}
+                </div>
+            </div>
             <div class="form-group">
                 <label class="custom-control custom-checkbox">
                     {% render_field form.checked class="custom-control-input" %}
@@ -43,6 +52,7 @@
                         {% endfor %}
                     </div>
                 {% endfor %}
+                <p>Polisher: <b>{{ polisher|title }}</b></p>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-lg">Submit</button>

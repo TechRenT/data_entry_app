@@ -10,7 +10,12 @@ class RawUrlForm(forms.ModelForm):
             'checked',
             'qualified'
         ]
-        widgets = {'url': forms.HiddenInput()}
+
+    def clean(self):
+        cleaned_data = super(RawUrlForm, self).clean()
+        checked = self.cleaned_data.get("checked")
+        if not checked:
+            raise forms.ValidationError("Make sure the checked field is checked.")
 
 
 class PolishUrlForm(forms.ModelForm):
@@ -29,7 +34,6 @@ class PolishUrlForm(forms.ModelForm):
         self.fields['polished_url'].required = False
         self.fields['email'].required = False
         self.fields['page_title'].required = False
-
 
     def clean(self):
         cleaned_data = super(PolishUrlForm, self).clean()
