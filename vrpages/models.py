@@ -34,7 +34,7 @@ class PolishUrl(models.Model):
     page_title = models.CharField(max_length=100)
     contact_name = models.CharField(max_length=30, blank=True)
     broken_link = models.CharField(max_length=255, blank=True)
-    polisher = models.ForeignKey(User, related_name='polishurls')
+    polisher = models.ForeignKey(User, related_name='polishurls', default=1)
 
     def __str__(self):
         return self.polished_url
