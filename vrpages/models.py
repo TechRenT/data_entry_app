@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -20,6 +21,7 @@ class RawUrl(models.Model):
     checked = models.BooleanField(default=False)
     qualified = models.BooleanField(default=False)
     vrpage = models.ForeignKey(VRPage)
+    polisher = models.ForeignKey(User, related_name='polishurls', blank=True, null=True)
 
     def __str__(self):
         return self.url
@@ -31,8 +33,8 @@ class PolishUrl(models.Model):
     polished_url = models.URLField(max_length=200)
     email = models.EmailField()
     page_title = models.CharField(max_length=100)
-    contact_name = models.CharField(max_length=30)
-    broken_link = models.CharField(max_length=255)
+    contact_name = models.CharField(max_length=30, blank=True)
+    broken_link = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.polished_url
