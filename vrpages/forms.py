@@ -25,7 +25,8 @@ class PolishUrlForm(forms.ModelForm):
             'email',
             'page_title',
             'contact_name',
-            'broken_link'
+            'broken_link',
+            'domain_authority'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -46,3 +47,8 @@ class PolishUrlForm(forms.ModelForm):
             raise forms.ValidationError("Please enter a valid email")
         if len(page_title) == 0:
             raise forms.ValidationError("Page Title should not be blank")
+
+
+# class AssignRawUrl(forms.Form):
+#     polisher = forms.
+#     number = forms.IntegerField

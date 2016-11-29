@@ -35,6 +35,12 @@ class PolishUrl(models.Model):
     page_title = models.CharField(max_length=100)
     contact_name = models.CharField(max_length=30, blank=True)
     broken_link = models.CharField(max_length=255, blank=True)
+    domain_authority = models.IntegerField()
 
     def __str__(self):
         return self.polished_url
+
+
+# class AssignRawUrl(models.Model):
+#     polisher = models.ForeignKey(User)
+#     number = models.IntegerField()
