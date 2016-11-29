@@ -41,6 +41,8 @@ class PolishUrl(models.Model):
         return self.polished_url
 
 
-# class AssignRawUrl(models.Model):
-#     polisher = models.ForeignKey(User)
-#     number = models.IntegerField()
+class AssignRawUrl(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    vrpage = models.ForeignKey(VRPage)
+    polisher = models.ForeignKey(User)
+    number = models.IntegerField()

@@ -49,6 +49,10 @@ class PolishUrlForm(forms.ModelForm):
             raise forms.ValidationError("Page Title should not be blank")
 
 
-# class AssignRawUrl(forms.Form):
-#     polisher = forms.
-#     number = forms.IntegerField
+class AssignRawUrlForm(forms.ModelForm):
+    class Meta:
+        model = models.AssignRawUrl
+        fields = [
+            'polisher',
+            'number'
+        ]

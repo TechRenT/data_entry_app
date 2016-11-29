@@ -22,6 +22,11 @@ def qualify_polish_list(request):
     return render(request, 'vrpages/qualify_polish_list.html', {'vrpages': vrpages})
 
 
+def assign_rawurls_list(request):
+    vrpages = models.VRPage.objects.all()
+    return render(request, 'vrpages/assign_rawurl_list.html', {'vrpages': vrpages})
+
+
 def rawurl_qualify(request, pk):
     try:
         rawurl = models.RawUrl.objects.filter(vrpage_id=pk).filter(checked=False)[0]
@@ -95,3 +100,17 @@ def qualify_polish(request, pk):
                                                     'polishform': polishform,
                                                     'rawurl': rawurl,
                                                     'polisher': request.user})
+
+
+def assign_rawurls(request, pk):
+    rawurls = models.RawUrl.objects.filter(vrpage_id=pk).filter(
+                checked=False).filter(polisher=None)
+    if rawurls:
+        form = forms.AssignRawUrlForm()
+        if request.method == 'POST':
+            if form.is_valid():
+                assign_request = form.save(commit=False)
+                assign_request.vrpage = pk
+                assign_request.save()
+        return render(request, 'vrpages/assign_rawurl.html', {'rawurls': rawurls, 'form': form})
+    return render(request, 'vrpages/assign_rawurl.html', {'rawurls': rawurls})
