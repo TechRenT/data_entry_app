@@ -6,15 +6,13 @@ class RawUrlForm(forms.ModelForm):
     class Meta:
         model = models.RawUrl
         fields = [
-            'url',
             'checked',
-            'qualified',
-            'polisher'
+            'qualified'
         ]
 
     def clean(self):
         cleaned_data = super(RawUrlForm, self).clean()
-        checked = self.cleaned_data.get("checked")
+        checked = cleaned_data.get("checked")
         if not checked:
             raise forms.ValidationError("Make sure the checked field is checked.")
 

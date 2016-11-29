@@ -69,12 +69,16 @@ def qualify_polish(request, pk):
     except IndexError:
         return HttpResponseRedirect(reverse('vrpages:no_task', args=[pk]))
     else:
-        form = forms.RawUrlForm(instance=rawurl, initial={'polisher': request.user.pk})
-        polishform = forms.PolishUrlForm(initial={'polished_url': rawurl.url,})
-                                                  #  'polisher': request.user.pk})
+        form = forms.RawUrlForm(instance=rawurl)
+                                # initial={'polisher': request.user.pk})
+        polishform = forms.PolishUrlForm(initial={'polished_url': rawurl.url})
+                                                  # 'polisher': request.user.pk})
 
         if request.method == 'POST':
-            form = forms.RawUrlForm(instance=rawurl, data=request.POST)
+            updated_rawurl = models.RawUrl.objects.get(id=rawurl.pk)
+            updated_rawurl.polisher = request.user
+            updated_rawurl.save()
+            form = forms.RawUrlForm(instance=updated_rawurl, data=request.POST)
             polishform = forms.PolishUrlForm(request.POST)
             if form.is_valid():
                 if form.cleaned_data["qualified"]:
