@@ -34,3 +34,4 @@ class RawUrlAdmin(ImportExportModelAdmin):
 
 admin.site.register(models.VRPage, VRPageAdmin)
 admin.site.register(models.PolishUrl)
+admin.site.register(models.AssignRawUrl)

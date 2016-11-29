@@ -108,9 +108,17 @@ def assign_rawurls(request, pk):
     if rawurls:
         form = forms.AssignRawUrlForm()
         if request.method == 'POST':
+            form = forms.AssignRawUrlForm(request.POST)
             if form.is_valid():
+                total = form.cleaned_data.get("number")
+                polisher = form.cleaned_data.get("polisher")
+                models.RawUrl.objects.filter(vrpage_id=pk).filter(
+                    checked=False).filter(polisher=None).update(polisher=polisher)
+                #rawurls[0:total].update(polisher=polisher)
+                # assigned_rawurls.update(polisher=polisher)
                 assign_request = form.save(commit=False)
-                assign_request.vrpage = pk
+                assign_request.vrpage = rawurls[0].vrpage
                 assign_request.save()
+                return HttpResponseRedirect(reverse('vrpages:qualify_polish', args=[pk]))
         return render(request, 'vrpages/assign_rawurl.html', {'rawurls': rawurls, 'form': form})
     return render(request, 'vrpages/assign_rawurl.html', {'rawurls': rawurls})
