@@ -70,9 +70,7 @@ def qualify_polish(request, pk):
         return HttpResponseRedirect(reverse('vrpages:no_task', args=[pk]))
     else:
         form = forms.RawUrlForm(instance=rawurl)
-                                # initial={'polisher': request.user.pk})
         polishform = forms.PolishUrlForm(initial={'polished_url': rawurl.url})
-                                                  # 'polisher': request.user.pk})
 
         if request.method == 'POST':
             updated_rawurl = models.RawUrl.objects.get(id=rawurl.pk)
@@ -86,7 +84,6 @@ def qualify_polish(request, pk):
                         form.save()
                         polishurl = polishform.save(commit=False)
                         polishurl.rawurl = rawurl
-                        #  polishurl.polisher = request.user
                         polishurl.save()
                         return HttpResponseRedirect(reverse
                                 ('vrpages:qualify_polish', args=[pk]))

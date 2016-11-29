@@ -9,19 +9,14 @@
         {{ form.non_field_errors }}
         {{ polishform.non_field_errors }}
         <hr>
-
+        <div class="m-y-1">
+            <strong>Url: </strong><a href="{{ rawurl.url }}" target="_blank">{{ rawurl.url }}</a>
+        </div>
+        <div class="m-y-1">
+            <strong>Polisher: </strong>{{ polisher|title }}
+        </div>
         <form action="" method="POST">
             {% csrf_token %}
-            <!--<div class="form-group">-->
-                <!--<label for="{{ form.url.id_for_label }}">-->
-                    <!--<strong>{{ form.url.label }}:</strong>-->
-                    <!--<a href="{{ rawurl.url }}" target="_blank">{{ rawurl.url }}</a>-->
-                <!--</label>-->
-                <!--<div>-->
-                    <!--{% render_field form.url class="form-control" %}-->
-                <!--</div>-->
-            <!--</div>-->
-            <strong>Url: </strong><a href="{{ rawurl.url }}" target="_blank">{{ rawurl.url }}</a>
             <div class="form-group">
                 <label class="custom-control custom-checkbox">
                     {% render_field form.checked class="custom-control-input" %}
@@ -36,14 +31,6 @@
                     <span class="custom-control-description"><strong>Qualified</strong></span>
                 </label>
             </div>
-            <!--<div class="form-group">-->
-                <!--<label for="{{ form.polisher.id_for_label }}">-->
-                    <!--<strong>{{ form.polisher.label }}:</strong>-->
-                <!--</label>-->
-                <!--<div>-->
-                    <!--{% render_field form.polisher class="form-control" %}-->
-                <!--</div>-->
-            <!--</div>-->
 
             <hr>
             <div id="polish" style="display: none">
@@ -61,7 +48,6 @@
                         {% endfor %}
                     </div>
                 {% endfor %}
-                <p>Polisher: <b>{{ polisher|title }}</b></p>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-lg">Submit</button>
