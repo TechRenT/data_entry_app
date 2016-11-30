@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Polishing{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Assign Raw Urls</h2>
+        <hr>
+        {% for vrpage in vrpages %}
+        <h4><a href="{% url 'vrpages:assign_rawurls' pk=vrpage.pk%}">{{ vrpage.name }}</a></h4>
+        <p>{{ vrpage.url }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

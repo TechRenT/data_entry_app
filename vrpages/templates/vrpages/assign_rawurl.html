@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Polishing{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Assign Raw Urls</h2>
+        <hr>
+        <p>Number of unassigned Raw Urls: {{ rawurls.count }}</p>
+        {% for rawurl in rawurls %}
+        <p>{{ rawurl.url }}</p>
+        {% endfor %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
