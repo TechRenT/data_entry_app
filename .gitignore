@@ -5,3 +5,4 @@ __pycache__
 .DS_Store
 .idea/
 *.csv
+db.sqlite3
