@@ -7,7 +7,7 @@ class RawUrlForm(forms.ModelForm):
         model = models.RawUrl
         fields = [
             'checked',
-            'qualified'
+            'qualified',
         ]
 
     def clean(self):
@@ -26,7 +26,7 @@ class PolishUrlForm(forms.ModelForm):
             'page_title',
             'contact_name',
             'broken_link',
-            'domain_authority'
+            'domain_authority',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -34,12 +34,14 @@ class PolishUrlForm(forms.ModelForm):
         self.fields['polished_url'].required = False
         self.fields['email'].required = False
         self.fields['page_title'].required = False
+        self.fields['domain_authority'].required = False
 
     def clean(self):
         cleaned_data = super(PolishUrlForm, self).clean()
         polished_url = cleaned_data.get("polished_url")
         email = cleaned_data.get("email")
         page_title = cleaned_data.get("page_title")
+        domain_authority = cleaned_data.get("domain_authority")
 
         if len(polished_url) == 0:
             raise forms.ValidationError("Polish URL should not be blank")
@@ -47,6 +49,8 @@ class PolishUrlForm(forms.ModelForm):
             raise forms.ValidationError("Please enter a valid email")
         if len(page_title) == 0:
             raise forms.ValidationError("Page Title should not be blank")
+        if not domain_authority or domain_authority <= 15:
+            raise forms.ValidationError("DA must be more than 15")
 
 
 class AssignRawUrlForm(forms.ModelForm):
