@@ -70,21 +70,25 @@ def no_task(request, pk):
 def qualify_polish(request, pk):
     try:
         rawurl = models.RawUrl.objects.filter(vrpage_id=pk).filter(
-                checked=False).filter(polisher=request.user)[0]
+                checked=False)[0]
     except IndexError:
         return HttpResponseRedirect(reverse('vrpages:no_task', args=[pk]))
     else:
         form = forms.RawUrlForm(instance=rawurl)
+        print("form is displayed")  # OK
         polishform = forms.PolishUrlForm(initial={'polished_url': rawurl.url})
 
         if request.method == 'POST':
-            # updated_rawurl = models.RawUrl.objects.get(id=rawurl.pk)
-            # updated_rawurl.polisher = request.user
-            # updated_rawurl.save()
-            # form = forms.RawUrlForm(instance=updated_rawurl, data=request.POST)
-            form = forms.RawUrlForm(instance=rawurl, data=request.POST)
+            print("request.method == POST")
+            updated_rawurl = models.RawUrl.objects.get(id=rawurl.pk)
+            updated_rawurl.polisher = request.user
+            updated_rawurl.save()
+            form = forms.RawUrlForm(instance=updated_rawurl, data=request.POST)
+            #form = forms.RawUrlForm(instance=rawurl, data=request.POST)
             polishform = forms.PolishUrlForm(request.POST)
+            print("form not yet validated")
             if form.is_valid():
+                print("form is valid")
                 if form.cleaned_data["qualified"]:
                     if polishform.is_valid():
                         form.save()
