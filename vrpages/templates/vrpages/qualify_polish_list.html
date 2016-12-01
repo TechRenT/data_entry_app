@@ -4,11 +4,12 @@
 
 {% block content %}
     <div class="container">
-        <h2>Qualify and Polish</h2>
+        <h4>Qualify and Polish</h4>
         <hr>
         {% for vrpage in vrpages %}
-        <h4><a href="{% url 'vrpages:qualify_polish' pk=vrpage.pk%}">{{ vrpage.name }}</a></h4>
+        <h5><a href="{% url 'vrpages:qualify_polish' pk=vrpage.pk%}">{{ vrpage.name }}</a></h5>
         <p>{{ vrpage.url }}</p>
+        <hr>
         {% endfor %}
     </div>
 {% endblock %}

@@ -4,18 +4,20 @@
 
 {% block content %}
     <div class="container">
-        <h2>Assign Raw Urls</h2>
+        <h4>Assign Raw Urls</h4>
         <hr>
-        <p>Number of unassigned Raw Urls: {{ rawurls.count }}</p>
-        {% for rawurl in rawurls %}
-        <p>{{ rawurl.url }}</p>
-        {% endfor %}
+        <p>Number of unassigned Raw Urls: <strong>{{ rawurls.count }}</strong></p>
         <form method="POST">
             {% csrf_token %}
-            {{ form }}
-            <div class="form-group">
-                <button type="submit" class="btn btn-success btn-lg">Submit</button>
-            </div>
+            {{ form.as_p }}
+
+            {% if rawurls %}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        Submit
+                    </button>
+                </div>
+            {% endif %}
         </form>
     </div>
 {% endblock %}
