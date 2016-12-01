@@ -49,3 +49,8 @@ class AssignRawUrl(models.Model):
 
     def __str__(self):
         return self.polisher.username
+
+
+class Unsubscribe(models.Model):
+    email = models.EmailField()
+    vrpage = models.ForeignKey(VRPage, blank=True, null=True)
