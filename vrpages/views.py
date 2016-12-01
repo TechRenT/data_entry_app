@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
 from . import forms
@@ -76,34 +75,24 @@ def qualify_polish(request, pk):
     else:
         rawurl_edit = models.RawUrl.objects.get(pk=rawurl.pk)
         form = forms.RawUrlForm(instance=rawurl_edit)
-        print("form is displayed")
         polishform = forms.PolishUrlForm(initial={'polished_url': rawurl_edit.url})
-        print("polishform is displayed")
 
         if request.method == 'POST':
-            print("request.method is POST")
-        #     updated_rawurl = models.RawUrl.objects.get(id=rawurl.pk)
-        #     updated_rawurl.polisher = request.user
-        #     updated_rawurl.save()
-        #     form = forms.RawUrlForm(instance=updated_rawurl, data=request.POST)
             form = forms.RawUrlForm(instance=rawurl_edit, data=request.POST)
-        #     #form = forms.RawUrlForm(instance=rawurl, data=request.POST)
             polishform = forms.PolishUrlForm(request.POST)
-        #     print("form not yet validated")
             if form.is_valid():
-                print("form is valid")
                 if form.cleaned_data["qualified"]:
                     if polishform.is_valid():
                         form.save()
                         polishurl = polishform.save(commit=False)
                         polishurl.rawurl = rawurl_edit
                         polishurl.save()
-                        return HttpResponseRedirect(reverse
-                                ('vrpages:qualify_polish', args=[pk]))
+                        return HttpResponseRedirect(reverse(
+                            'vrpages:qualify_polish', args=[pk]))
                 else:
                     form.save()
-                    return HttpResponseRedirect(reverse
-                                ('vrpages:qualify_polish', args=[pk]))
+                    return HttpResponseRedirect(reverse(
+                        'vrpages:qualify_polish', args=[pk]))
         return render(request, 'vrpages/qualify_polish.html', {'form': form,
                                                     'polishform': polishform,
                                                     'rawurl': rawurl_edit,
