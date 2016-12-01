@@ -54,3 +54,14 @@ class AssignRawUrl(models.Model):
 class Unsubscribe(models.Model):
     email = models.EmailField()
     vrpage = models.ForeignKey(VRPage, blank=True, null=True)
+
+    def __str__(self):
+        return self.email
+
+
+class Bounce(models.Model):
+    email = models.EmailField()
+    vrpage = models.ForeignKey(VRPage, blank=True, null=True)
+
+    def __str__(self):
+        return self.email
