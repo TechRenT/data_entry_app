@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'import_export',
     'widget_tweaks',
     'debug_toolbar',
+    'accounts',
     'vrpages',
 ]
 
