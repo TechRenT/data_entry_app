@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import warnings
+
+from django.core.exceptions import ImproperlyConfigured
+
 
 def get_env_variable(var_name):
     """Get the environment variable or return exception"""
@@ -143,3 +147,4 @@ STATICFILES_DIRS = (
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda x: True
 }
+
