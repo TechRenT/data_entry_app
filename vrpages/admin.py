@@ -33,6 +33,10 @@ class RawUrlResource(resources.ModelResource):
         for rawurl in rawurls:
             if rawurl.url == instance.url:
                 return True
+        polished_urls = models.PolishUrl.objects.filter(rawurl_id__vrpage_id=instance.vrpage)
+        for url in polished_urls:
+            if instance.domain == url.rawurl.domain:
+                return True
         else:
             return False
 

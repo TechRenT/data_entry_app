@@ -115,9 +115,11 @@ def assign_rawurls(request, pk):
             if form.is_valid():
                 total = form.cleaned_data.get("number")
                 polisher = form.cleaned_data.get("polisher")
+                # assigned_rawurls = models.RawUrl.objects.filter(vrpage_id=pk).filter(
+                #     checked=False).filter(polisher=None)[:total]
                 assigned_rawurls = models.RawUrl.objects.filter(vrpage_id=pk).filter(
-                    checked=False).filter(polisher=None)[:total]
-                models.RawUrl.objects.filter(id__in=assigned_rawurls).update(polisher=polisher)
+                    checked=False).filter(polisher=None).values_list('pk', flat=True)[:total]
+                models.RawUrl.objects.filter(id__in=list(assigned_rawurls)).update(polisher=polisher)
                 assign_request = form.save(commit=False)
                 assign_request.vrpage = rawurls[0].vrpage
                 assign_request.save()
