@@ -44,19 +44,19 @@ class PolishUrlForm(forms.ModelForm):
         page_title = cleaned_data.get("page_title")
         domain_authority = cleaned_data.get("domain_authority")
 
-        unsubscribes = [str(unsubscribe) for unsubscribe in models.Unsubscribe.objects.all()]
-        bounces = [str(bounce) for bounce in models.Bounce.objects.all()]
-        polished_emails = [polished.email for polished in models.PolishUrl.objects.filter(rawurl__vrpage=self.vrpage_id)]
+        unsubscribes = [str(unsubscribe).lower() for unsubscribe in models.Unsubscribe.objects.all()]
+        bounces = [str(bounce).lower() for bounce in models.Bounce.objects.all()]
+        polished_emails = [polished.email.lower() for polished in models.PolishUrl.objects.filter(rawurl__vrpage=self.vrpage_id)]
 
         if len(polished_url) == 0:
             raise forms.ValidationError("Polish URL should not be blank")
         if not email:
             raise forms.ValidationError("Please enter a valid email")
-        elif email in unsubscribes:
+        elif email.lower() in unsubscribes:
             raise forms.ValidationError("Email is in the unsubscribed list")
-        elif email in bounces:
+        elif email.lower() in bounces:
             raise forms.ValidationError("Email is in the bounced list")
-        elif email in polished_emails:
+        elif email.lower() in polished_emails:
             raise forms.ValidationError("Email is already in our database for this VR page")
         if len(page_title) == 0:
             raise forms.ValidationError("Page Title should not be blank")
