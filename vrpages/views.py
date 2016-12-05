@@ -78,6 +78,8 @@ def qualify_polish(request, pk):
     except IndexError:
         return HttpResponseRedirect(reverse('vrpages:no_task', args=[pk]))
     else:
+        assigned_rawurls = len(models.RawUrl.objects.filter(vrpage_id=pk).filter(
+            checked=False).filter(polisher=request.user))
         rawurl_edit = models.RawUrl.objects.get(pk=rawurl.pk)
         form = forms.RawUrlForm(instance=rawurl_edit)
         polishform = forms.PolishUrlForm(vrpage_id=pk, initial={'polished_url': rawurl_edit.url})
@@ -98,10 +100,13 @@ def qualify_polish(request, pk):
                     form.save()
                     return HttpResponseRedirect(reverse(
                         'vrpages:qualify_polish', args=[pk]))
-        return render(request, 'vrpages/qualify_polish.html', {'form': form,
-                                                    'polishform': polishform,
-                                                    'rawurl': rawurl_edit,
-                                                    'polisher': request.user})
+        return render(request, 'vrpages/qualify_polish.html', {
+            'form': form,
+            'polishform': polishform,
+            'rawurl': rawurl_edit,
+            'assigned_rawurls': assigned_rawurls,
+            'polisher': request.user
+        })
 
 
 @login_required
