@@ -10,7 +10,7 @@
         {{ polishform.non_field_errors }}
         <hr>
         <div class="m-y-1">
-            <strong>Url: </strong><a href="{{ rawurl.url }}" target="_blank">{{ rawurl.url }}</a>
+            <strong>Raw Url: </strong><a href="{{ rawurl.url }}" target="_blank">{{ rawurl.url }}</a>
         </div>
         <div class="m-y-1">
             <strong>Polisher: </strong>{{ polisher|title }}
@@ -41,7 +41,7 @@
 
                 {% for field in polishform.visible_fields %}
                     <div class="form-group">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <label for="{{ field.id_for_label }}"><strong>{{ field.label|title }}:</strong></label>
                         {{ field|add_class:'form-control' }}
                         {% for error in field.errors %}
                         <span class="help-block">{{ error }}</span>

@@ -82,11 +82,11 @@ def qualify_polish(request, pk):
             checked=False).filter(polisher=request.user))
         rawurl_edit = models.RawUrl.objects.get(pk=rawurl.pk)
         form = forms.RawUrlForm(instance=rawurl_edit)
-        polishform = forms.PolishUrlForm(vrpage_id=pk, initial={'polished_url': rawurl_edit.url})
+        polishform = forms.PolishUrlForm(vrpage_id=pk, rawurl_edit=rawurl_edit, initial={'polished_url': rawurl_edit.url})
 
         if request.method == 'POST':
             form = forms.RawUrlForm(instance=rawurl_edit, data=request.POST)
-            polishform = forms.PolishUrlForm(request.POST, vrpage_id=pk)
+            polishform = forms.PolishUrlForm(request.POST, vrpage_id=pk, rawurl_edit=rawurl_edit)
             if form.is_valid():
                 if form.cleaned_data["qualified"]:
                     if polishform.is_valid():
